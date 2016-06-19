@@ -51,7 +51,7 @@ class PagerfantaExtension extends \Twig_Extension
         }
 
         if (null === $options['routeName']) {
-            $request = $this->app['request'];
+            $request = $this->app['request_stack']->getCurrentRequest();
 
             $options['routeName'] = $request->attributes->get('_route');
             $options['routeParams'] = array_merge($request->query->all(), $request->attributes->get('_route_params'));
