@@ -18,9 +18,9 @@ class PagerfantaServiceProvider implements ServiceProviderInterface, BootablePro
 {
     public function register(Container $container)
     {
-        $container['pagerfanta.pager_factory'] = $container->factory(function ($container) {
+        $container['pagerfanta.pager_factory'] = function ($container) {
             return new PagerfantaFactory();
-        });
+        };
 
         $container['pagerfanta.view.default_options'] = array(
             'routeName'        => null,
@@ -32,7 +32,7 @@ class PagerfantaServiceProvider implements ServiceProviderInterface, BootablePro
             'default_view'     => 'default'
         );
 
-        $container['pagerfanta.view_factory'] = $container->factory(function ($container) {
+        $container['pagerfanta.view_factory'] = function ($container) {
             $defaultView = new DefaultView();
             $twitterBoostrapView = new TwitterBootstrapView();
             $twitterBoostrap3View = new TwitterBootstrap3View();
@@ -45,16 +45,14 @@ class PagerfantaServiceProvider implements ServiceProviderInterface, BootablePro
             ));
 
             return $factoryView;
-        });
+        };
 
         if (isset($container['twig'])) {
-            $container['twig'] = $container->factory(
-              $container->extend('twig', function ($twig, $app) {
-                    $twig->addExtension(new PagerfantaExtension($app));
+            $container->extend('twig', function ($twig, $app) {
+                $twig->addExtension(new PagerfantaExtension($app));
 
-                    return $twig;
-                })
-            );
+                return $twig;
+            });
         }
     }
 
