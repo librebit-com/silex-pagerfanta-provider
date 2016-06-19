@@ -1,9 +1,9 @@
 {
-    "name": "franmomu/silex-pagerfanta-provider",
+    "name": "sinasalek/silex-pagerfanta-provider",
     "type": "library",
     "description": "Silex ServiceProvider for Pagerfanta Library",
     "keywords": ["silex", "service provider", "pagerfanta"],
-    "homepage": "https://github.com/franmomu/silex-pagerfanta-provider",
+    "homepage": "https://github.com/sinasalek/silex-pagerfanta-provider",
     "license": "MIT",
     "authors": [
         {
