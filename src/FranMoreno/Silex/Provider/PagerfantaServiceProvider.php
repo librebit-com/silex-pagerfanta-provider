@@ -2,8 +2,10 @@
 
 namespace FranMoreno\Silex\Provider;
 
+use Pimple\ServiceProviderInterface;
+use Pimple\Container;
+use Silex\Api\BootableProviderInterface;
 use Silex\Application;
-use Silex\ServiceProviderInterface;
 
 use Pagerfanta\View\DefaultView;
 use Pagerfanta\View\TwitterBootstrapView;
@@ -12,15 +14,15 @@ use Pagerfanta\View\ViewFactory;
 use FranMoreno\Silex\Service\PagerfantaFactory;
 use FranMoreno\Silex\Twig\PagerfantaExtension;
 
-class PagerfantaServiceProvider implements ServiceProviderInterface
+class PagerfantaServiceProvider implements ServiceProviderInterface, BootableProviderInterface
 {
-    public function register(Application $app)
+    public function register(Container $container)
     {
-        $app['pagerfanta.pager_factory'] = $app->share(function ($app) {
+        $container['pagerfanta.pager_factory'] = $container->factory(function ($container) {
             return new PagerfantaFactory();
         });
 
-        $app['pagerfanta.view.default_options'] = array(
+        $container['pagerfanta.view.default_options'] = array(
             'routeName'        => null,
             'routeParams'      => array(),
             'pageParameter'    => '[page]',
@@ -30,7 +32,7 @@ class PagerfantaServiceProvider implements ServiceProviderInterface
             'default_view'     => 'default'
         );
 
-        $app['pagerfanta.view_factory'] = $app->share(function ($app) {
+        $container['pagerfanta.view_factory'] = $container->factory(function ($container) {
             $defaultView = new DefaultView();
             $twitterBoostrapView = new TwitterBootstrapView();
             $twitterBoostrap3View = new TwitterBootstrap3View();
@@ -45,9 +47,9 @@ class PagerfantaServiceProvider implements ServiceProviderInterface
             return $factoryView;
         });
 
-        if (isset($app['twig'])) {
-            $app['twig'] = $app->share(
-                $app->extend('twig', function ($twig, $app) {
+        if (isset($container['twig'])) {
+            $container['twig'] = $container->factory(
+              $container->extend('twig', function ($twig, $app) {
                     $twig->addExtension(new PagerfantaExtension($app));
 
                     return $twig;
