@@ -1,5 +1,5 @@
 {
-    "name": "sinasalek/silex-pagerfanta-provider",
+    "name": "librebit-com/silex-pagerfanta-provider",
     "type": "library",
     "description": "Silex ServiceProvider for Pagerfanta Library",
     "keywords": ["silex", "service provider", "pagerfanta"],
@@ -15,7 +15,7 @@
     "require": {
         "silex/silex": "~2",
         "pagerfanta/pagerfanta": "~1.0,>=1.0.3",
-        "symfony/property-access": "~3"
+        "symfony/property-access": "~2.8|^3.0"
     },
     "autoload": {
         "psr-0": {
